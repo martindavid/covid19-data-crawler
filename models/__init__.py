@@ -38,14 +38,6 @@ class WorldwideAggregated(Base):
     increased_rate = Column(Float)
 
 
-class CrawlerTimestamp(Base):
-    __tablename__ = "crawler_timestamp"
-
-    _id = Column(Integer, primary_key=True, autoincrement=True)
-    last_datahub_run = Column(Date)
-    last_raw_covid_run = Column(Date)
-
-
 class RawDataCrawlerTimestamp(Base):
     __tablename__ = "raw_data_crawler_timestamp"
 
@@ -53,13 +45,16 @@ class RawDataCrawlerTimestamp(Base):
     data_date_crawled = Column(Date)
     crawled_at = Column(Date)
 
+    def has_been_crawled(self, date):
+        self.data_date_crawled.strftime("%m-%d-%Y") == date
+
 
 class JohnHopkinsData(Base):
 
     __tablename__ = "john_hopkins_data"
 
     _id = Column(Integer, primary_key=True, autoincrement=True)
-    fips = Column(Integer)
+    fips = Column(Integer, nullable=True)
     admin2 = Column(Text)
     province_state = Column(Text)
     country_region = Column(Text)
