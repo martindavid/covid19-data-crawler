@@ -1,5 +1,5 @@
 from .base import Base
-from sqlalchemy import Column, String, Integer, Date, Float, Text
+from sqlalchemy import Column, String, Integer, DateTime, Date, Float, Text
 
 
 class TimeSeriesData(Base):
@@ -54,14 +54,14 @@ class JohnHopkinsData(Base):
     __tablename__ = "john_hopkins_data"
 
     _id = Column(Integer, primary_key=True, autoincrement=True)
-    fips = Column(Integer, nullable=True)
-    admin2 = Column(Text)
-    province_state = Column(Text)
-    country_region = Column(Text)
-    last_update = Column(Date)
-    lat = Column(Float)
-    long = Column(Float)
+    fips = Column(Text, nullable=True)
+    admin2 = Column(Text, nullable=True)
+    province_state = Column(Text, nullable=True)
+    country_region = Column(Text, nullable=True)
+    last_update = Column(DateTime, nullable=True)
+    lat = Column(Float, default=0.0)
+    long = Column(Float, default=0.0)
     confirmed = Column(Integer, default=0)
     death = Column(Integer, default=0)
     recovered = Column(Integer, default=0)
-    combined_key = Column(Text)
+    combined_key = Column(Text, nullable=True)
