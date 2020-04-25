@@ -38,6 +38,12 @@ class WorldwideAggregated(Base):
     increased_rate = Column(Float)
 
 
+class CrawlerTimestamp(Base):
+    __tablename__ = "crawler_timestamp"
+
+    _id = Column(Integer, primary_key=True, autoincrement=True)
+    crawled_at = Column(DateTime)
+
 class RawDataCrawlerTimestamp(Base):
     __tablename__ = "raw_data_crawler_timestamp"
 

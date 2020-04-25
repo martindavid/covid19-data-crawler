@@ -1,8 +1,10 @@
 from datetime import datetime
-from models.base import engine, Base
+from models.base import engine, Base, Session
+from models import CrawlerTimestamp
 from crawler.datahub_crawler import DatahubCrawler
 from crawler.john_hopkins_data_crawler import JohnHopkinsDataCrawler
 from crawler.owd_crawler import OWDCrawler
+
 
 
 def init_db():
@@ -19,6 +21,14 @@ def crawl_dataset():
 
     jh_crawler = JohnHopkinsDataCrawler()
     jh_crawler.crawl_data()
+
+    update_crawler_timestamp()
+
+
+def update_crawler_timestamp():
+    session = Session()
+    session.add(CrawlerTimestamp(crawled_at=datetime.now()))
+    session.commit()
 
 
 
