@@ -49,11 +49,37 @@ class RawDataCrawlerTimestamp(Base):
         self.data_date_crawled.strftime("%m-%d-%Y") == date
 
 
+class OWDData(Base):
+
+    __tablename__ = "owd_data"
+
+    _id = Column(Integer, primary_key=True, autoincrement=True)
+    iso_code = Column(Text)
+    location = Column(Text)
+    date = Column(Date)
+    total_cases = Column(Integer)
+    new_cases = Column(Integer)
+    total_deaths = Column(Integer)
+    new_deaths = Column(Integer)
+    total_cases_per_million = Column(Float, nullable=True)
+    new_cases_per_million = Column(Float, nullable=True)
+    total_deaths_per_million = Column(Float, nullable=True)
+    new_deaths_per_million = Column(Float, nullable=True)
+    total_tests = Column(Float, nullable=True)
+    new_tests = Column(Float, nullable=True)
+    total_tests_per_thousand = Column(Float, nullable=True)
+    new_tests_per_thousand = Column(Float, nullable=True)
+    tests_unit = Column(Text, nullable=True)
+    last_updated = Column(DateTime)
+
+
+
 class JohnHopkinsData(Base):
 
     __tablename__ = "john_hopkins_data"
 
     _id = Column(Integer, primary_key=True, autoincrement=True)
+    date = Column(Date, nullable=False)
     fips = Column(Text, nullable=True)
     admin2 = Column(Text, nullable=True)
     province_state = Column(Text, nullable=True)

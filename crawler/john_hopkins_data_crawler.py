@@ -22,12 +22,7 @@ class JohnHopkinsDataCrawler():
 
     def crawl_data(self):
         for single_date in daterange(self.start_date, self.end_date):
-            has_been_crawled = self.session.query(
-                RawDataCrawlerTimestamp).filter(
-                    RawDataCrawlerTimestamp.data_date_crawled ==
-                    single_date).first()
-            if not has_been_crawled:
-                self.crawl_individual_csv(single_date)
+            self.crawl_individual_csv(single_date)
         print("Success crawl raw data from JohnHopkins Repo")
 
     def crawl_individual_csv(self, date_to_crawl: date):
@@ -37,13 +32,8 @@ class JohnHopkinsDataCrawler():
         csv_file = f"{csv_base_url}/{date_str}.csv"
         print(f"[START]Crawl data for {date_str}")
 
-        yesterday = self.end_date - timedelta(days=1)
-        to_skip = date_to_crawl == self.end_date or date_to_crawl == yesterday
         try:
-            if to_skip:
-                self.session.query(JohnHopkinsData).filter(
-                    cast(JohnHopkinsData.last_update, Date) ==
-                    date_to_crawl).delete(synchronize_session=False)
+            self.session.query(JohnHopkinsData).delete(synchronize_session=False)
 
             data_to_store = []
             with requests.get(csv_file, stream=True) as f:
@@ -58,6 +48,7 @@ class JohnHopkinsDataCrawler():
                                     JohnHopkinsData(
                                         fips=(row[0]
                                               if row[0] != '' else None),
+                                        date=date_to_crawl,
                                         admin2=row[1],
                                         province_state=row[2],
                                         country_region=row[3],
@@ -75,11 +66,6 @@ class JohnHopkinsDataCrawler():
                         idx += 1
 
                     self.session.add_all(data_to_store)
-                    if not to_skip:
-                        self.session.add(
-                            RawDataCrawlerTimestamp(
-                                data_date_crawled=date_to_crawl,
-                                crawled_at=datetime.now()))
                     self.session.commit()
                     print(f"[END]Success crawl {idx} data for {date_to_crawl}")
                 else:

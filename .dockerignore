@@ -1,0 +1,4 @@
+db
+.docker-compose.yaml
+Dockerfile
+.env

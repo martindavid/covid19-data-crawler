@@ -1,0 +1,5 @@
+{
+  "python.pythonPath": "/home/mvalentino/.pyenv/versions/covid19-data-crawler/bin/python",
+  "python.formatting.provider": "yapf",
+  "python.linting.enabled": true
+}
