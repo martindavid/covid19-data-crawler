@@ -21,7 +21,9 @@ from
 		select
 			max(date)
 		from
-			owd_data)) A
+			owd_data
+		)
+	and location != 'World') A
 inner join (
 	select
 		1 as id,
@@ -34,7 +36,9 @@ inner join (
 		select
 			max(date) - 7
 		from
-			owd_data)) B on
+			owd_data
+		)
+	and location != 'World') B on
 	A.id = B.id
 inner join (
 	select

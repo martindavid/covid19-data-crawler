@@ -1,5 +1,5 @@
 from .base import Base
-from sqlalchemy import Column, String, Integer, DateTime, Date, Float, Text
+from sqlalchemy import Column, String, Integer, DateTime, Time, Date, Float, Text
 
 
 class TimeSeriesData(Base):
@@ -97,3 +97,49 @@ class JohnHopkinsData(Base):
     death = Column(Integer, default=0)
     recovered = Column(Integer, default=0)
     combined_key = Column(Text, nullable=True)
+
+
+class GuardianAustraliaData(Base):
+
+    __tablename__ = 'guardian_aus_data'
+
+    _id = Column(Integer, primary_key=True, autoincrement=True)
+    community = Column(Integer)
+    community_unknown = Column(Integer)
+    confirmed = Column(Integer)
+    recovered = Column(Integer)
+    deaths = Column(Integer)
+    date = Column(Date)
+    time = Column(Time)
+    hospitalisation = Column(Integer)
+    intensive_care = Column(Integer)
+    notes = Column(Text)
+    under_60 = Column(Integer)
+    over_60 = Column(Integer)
+    state = Column(Text)
+    test_conducted_neg = Column(Integer)
+    test_conducted_tot = Column(Integer)
+    travel_related = Column(Text)
+    under_investigation = Column(Integer)
+    update_source = Column(Text)
+    ventilator_usage = Column(Integer)
+
+
+class AustraliaLatest(Base):
+
+    __tablename__ = 'australia_latest'
+
+    _id = Column(Integer, primary_key=True, autoincrement=True)
+    state = Column(Text)
+    state_name = Column(Text)
+    confirmed = Column(Integer)
+    deaths = Column(Integer)
+    recovered = Column(Integer)
+    active_cases = Column(Integer)
+    test_conducted = Column(Integer)
+    tests_per_million = Column(Integer)
+    percent_positive = Column(Float)
+    current_hospitalisation = Column(Integer)
+    current_icu = Column(Integer)
+    current_in_ventilator = Column(Integer)
+    last_updated = Column(Date)

@@ -3,6 +3,7 @@ from models.base import engine, Base, Session
 from models import CrawlerTimestamp
 from crawler.datahub_crawler import DatahubCrawler
 from crawler.john_hopkins_data_crawler import JohnHopkinsDataCrawler
+from crawler.guardian_crawler import GuardianDataCrawler
 from crawler.owd_crawler import OWDCrawler
 
 
@@ -21,6 +22,9 @@ def crawl_dataset():
 
     jh_crawler = JohnHopkinsDataCrawler()
     jh_crawler.crawl_data()
+
+    grd_crawler = GuardianDataCrawler()
+    grd_crawler.crawl_data()
 
     update_crawler_timestamp()
 
