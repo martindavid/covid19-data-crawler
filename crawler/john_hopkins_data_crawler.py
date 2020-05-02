@@ -21,6 +21,8 @@ class JohnHopkinsDataCrawler():
         self.end_date = date.today()
 
     def crawl_data(self):
+        self.session.query(JohnHopkinsData).delete(synchronize_session=False)
+        self.session.commit()
         for single_date in daterange(self.start_date, self.end_date):
             self.crawl_individual_csv(single_date)
         print("Success crawl raw data from JohnHopkins Repo")
@@ -33,8 +35,6 @@ class JohnHopkinsDataCrawler():
         print(f"[START]Crawl data for {date_str}")
 
         try:
-            self.session.query(JohnHopkinsData).delete(synchronize_session=False)
-
             data_to_store = []
             with requests.get(csv_file, stream=True) as f:
                 if f.status_code != HTTPStatus.NOT_FOUND:
