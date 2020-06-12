@@ -61,6 +61,7 @@ class OWDData(Base):
 
     _id = Column(Integer, primary_key=True, autoincrement=True)
     iso_code = Column(Text)
+    continent = Column(Text)
     location = Column(Text)
     date = Column(Date)
     total_cases = Column(Integer)
